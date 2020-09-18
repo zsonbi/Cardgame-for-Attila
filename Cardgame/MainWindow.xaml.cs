@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace Cardgame
 {
@@ -20,9 +21,12 @@ namespace Cardgame
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Game game;
+
         public MainWindow()
         {
             InitializeComponent();
+            game = new Game();
         }
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

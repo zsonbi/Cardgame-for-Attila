@@ -22,6 +22,7 @@ namespace Cardgame
         //Which Side if the card on Default is red
         public bool Side { get; set; }
 
+        //---------------------------------------------------------------------------------------------
         //Constructor
         public Card(byte LeftAttack, byte UpAttack, byte RightAttack, byte DownAttack, byte ValueOfCard)
         {
