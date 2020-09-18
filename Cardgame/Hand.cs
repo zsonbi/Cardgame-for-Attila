@@ -45,5 +45,19 @@ namespace Cardgame
         {
             cards.RemoveAt(index);
         }
+
+        //--------------------------------------------------------------------------------
+        //Gets the card's Uri
+        public Uri GetUri(sbyte index)
+        {
+            return cards[index].PictureUri;
+        }
+
+        //--------------------------------------------------------------------------------
+        //Search for the card with the specified index
+        public Card GetCardByIndex(sbyte index)
+        {
+            return cards.Find(x => x.index == index);
+        }
     }
 }

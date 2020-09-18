@@ -9,30 +9,28 @@ namespace Cardgame
     internal struct Card
     {
         //Properties
-        public byte LeftAttack { get; private set; } //LeftAttack Value of the card
 
-        public byte UpAttack { get; private set; } //UpAttack Value of the card
-        public byte RightAttack { get; private set; } //RightAttack Value of the card
-        public byte DownAttack { get; private set; } //DownAttack Value of the card
-        public byte ValueOfCard { get; private set; } //Value of the card (Which is visually is in the upper right corner)
-
-        //Index of the card in the window
-        public sbyte index { get; set; }
-
-        //Which Side if the card on Default is red
-        public bool Side { get; set; }
+        public byte LeftAttack { get; set; } //LeftAttack Value of the card
+        public byte UpAttack { get; set; } //UpAttack Value of the card
+        public byte RightAttack { get; set; } //RightAttack Value of the card
+        public byte DownAttack { get; set; } //DownAttack Value of the card
+        public byte Value { get; set; } //Value of the card (Which is visually is in the upper right corner)
+        public Uri PictureUri { get; set; } //The Uri to the Picture
+        public sbyte index { get; set; } //Index of the card in the window
+        public bool Side { get; set; } //Which Side if the card on Default is red
 
         //---------------------------------------------------------------------------------------------
         //Constructor
-        public Card(byte LeftAttack, byte UpAttack, byte RightAttack, byte DownAttack, byte ValueOfCard)
+        public Card(byte LeftAttack, byte UpAttack, byte RightAttack, byte DownAttack, byte Value, string PictureUri)
         {
             this.LeftAttack = LeftAttack;
             this.UpAttack = UpAttack;
             this.RightAttack = RightAttack;
             this.DownAttack = DownAttack;
-            this.ValueOfCard = ValueOfCard;
+            this.Value = Value;
             this.index = -1;
             this.Side = false;
+            this.PictureUri = new Uri(PictureUri);
         }
     }
 }

@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cardgame"
         mc:Ignorable="d"
-        Title="Game" Height="800" Width="1200">
+        Title="Game" Height="800" Width="1300">
 
     <Window.Resources>
         <Style TargetType="Rectangle">
             <EventSetter Event="MouseLeftButtonDown" Handler="Rectangle_MouseLeftButtonDown" />
+            <Setter Property="Grid.ZIndex" Value="10"></Setter>
         </Style>
     </Window.Resources>
 
