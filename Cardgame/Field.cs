@@ -1,38 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Cardgame
 {
     internal class Field
     {
+        private sbyte numberOfPlacedCards = 0;
+
         //The cards which are placed down
-        private List<Card> cards = new List<Card>();
+        private Card[] cards = new Card[9];
+
+        private bool[] occupied = new bool[9];
+        private Border[] CardObjects = new Border[9];
 
         private Grid FieldGrid;
+
+        //Properties
+        public sbyte RedScore { get; private set; }
+
+        public sbyte BlueScore { get; private set; }
 
         //Constructor
         public Field(Grid FieldGrid)
         {
             this.FieldGrid = FieldGrid;
+            RedScore = 0;
+            BlueScore = 0;
         }
 
+        //**********************************************************************
         //private Methods
         //Check if the Neighbours have smaller attacks than the card
         private void CheckNeighbours(sbyte index)
         {
+            //So the computer doesn't do useless stuff
+            if (numberOfPlacedCards == 0)
+            {
+                return;
+            }
+
+            //Left check
+            if (index - 1 >= 0 && occupied[index - 1] && index % 3 != 0)
+            {
+                if (cards[index].LeftAttack > cards[index - 1].RightAttack)
+                {
+                    ChangeSide((sbyte)(index - 1), cards[index].Side);
+                }
+            }
+
+            if (index - 3 >= 0 && occupied[index - 3])
+            {
+                if (cards[index].UpAttack > cards[index - 1].DownAttack)
+                {
+                    ChangeSide((sbyte)(index - 3), cards[index].Side);
+                }
+            }
+
+            if (index + 1 < 9 && occupied[index + 1] && index % 3 != 2)
+            {
+                if (cards[index].RightAttack > cards[index + 1].LeftAttack)
+                {
+                    ChangeSide((sbyte)(index + 1), cards[index].Side);
+                }
+            }
+
+            if (index + 3 < 9 && occupied[index + 3])
+            {
+                if (cards[index].DownAttack > cards[index + 3].UpAttack)
+                {
+                    ChangeSide((sbyte)(index + 3), cards[index].Side);
+                }
+            }
         }
 
-        private void PlaceCardInGrid(sbyte index, Uri input)
+        private void ChangeSide(sbyte index, bool Side)
         {
-            Image temp = new Image();
+            cards[index].Side = Side;
+            CardObjects[index].Background = !Side ? Brushes.Red : Brushes.Blue;
+        }
 
+        //-----------------------------------------------------------------------
+        //Places a card at the specified index
+        private void PlaceCardInGrid(sbyte index, Uri input, bool Side)
+        {
+            Border border = new Border();
+            border.BorderThickness = new Thickness(1);
+            border.Background = !Side ? Brushes.Red : Brushes.Blue;
+            Image temp = new Image();
             temp.Source = new System.Windows.Media.Imaging.BitmapImage(input);
-            temp.Name = "Field" + "R" + index;
-            Grid.SetZIndex(temp, 20);
-            Grid.SetColumn(temp, index % 3);
-            Grid.SetRow(temp, index / 3);
-            FieldGrid.Children.Add(temp);
+            temp.Name = Side + "R" + index;
+            temp.Margin = new Thickness(2);
+            Grid.SetColumn(border, index % 3);
+            Grid.SetRow(border, index / 3);
+            border.Child = temp;
+            Grid.SetZIndex(border, 20);
+            CardObjects[index] = border;
+            occupied[index] = true;
+            FieldGrid.Children.Add(border);
         }
 
         //**************************************************************************
@@ -41,9 +108,10 @@ namespace Cardgame
         public void PutDownCard(sbyte index, Card thePlacedCard)
         {
             thePlacedCard.index = index;
-            cards.Add(thePlacedCard);
+            cards[index] = thePlacedCard;
             CheckNeighbours(index);
-            PlaceCardInGrid(index, thePlacedCard.PictureUri);
+            PlaceCardInGrid(index, thePlacedCard.PictureUri, thePlacedCard.Side);
+            numberOfPlacedCards++;
         }
     }
 }

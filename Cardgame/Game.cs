@@ -60,6 +60,8 @@ namespace Cardgame
             player2Hand = new Hand(player2Deck.Draw(handsize), true);
         }
 
+        //-----------------------------------------------------------------------------
+        //Makes a border which contains the card's image
         private Border CreateCard(sbyte index, Uri Picture, bool Side)
         {
             Border border = new Border();
