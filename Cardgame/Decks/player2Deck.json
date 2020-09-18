@@ -1,0 +1,61 @@
+{
+  "cards": [
+    {
+      "LeftAttack": 4,
+      "UpAttack": 1,
+      "RightAttack": 2,
+      "DownAttack": 3,
+      "Value": 6
+    },
+    {
+      "LeftAttack": 4,
+      "UpAttack": 1,
+      "RightAttack": 2,
+      "DownAttack": 3,
+      "Value": 6
+    },
+    {
+      "LeftAttack": 4,
+      "UpAttack": 1,
+      "RightAttack": 2,
+      "DownAttack": 3,
+      "Value": 6
+    },
+    {
+      "LeftAttack": 4,
+      "UpAttack": 1,
+      "RightAttack": 2,
+      "DownAttack": 3,
+      "Value": 6
+    },
+    {
+      "LeftAttack": 4,
+      "UpAttack": 1,
+      "RightAttack": 2,
+      "DownAttack": 3,
+      "Value": 6
+    },
+    {
+      "LeftAttack": 4,
+      "UpAttack": 1,
+      "RightAttack": 2,
+      "DownAttack": 3,
+      "Value": 6
+    },
+    {
+      "LeftAttack": 4,
+      "UpAttack": 1,
+      "RightAttack": 2,
+      "DownAttack": 3,
+      "Value": 6
+    },
+    {
+      "LeftAttack": 4,
+      "UpAttack": 1,
+      "RightAttack": 2,
+      "DownAttack": 3,
+      "Value": 6
+    }
+
+  ]
+}
