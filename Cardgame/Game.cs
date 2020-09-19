@@ -18,12 +18,13 @@ namespace Cardgame
         private Deck player2Deck;//blueplayer's deck
         private Hand player1Hand;//redplayer's hand
         private Hand player2Hand;//blueplayer's hand
-        private Grid FieldGrid;
-        private Grid Player1Grid;
-        private Grid Player2Grid;
-        private Field board;
+        private Grid FieldGrid; //The Grid where the players will place their cards
+        private Grid Player1Grid; //red player's hand
+        private Grid Player2Grid; //blue player's hand
+        private Field board; //The Board where the players will place their cards
         private bool CurrentSide = false; //The side which comes next
         private sbyte CurrentSelectedCardIndex = -1; //The current
+        private TimeSpan HotSwapTime = TimeSpan.FromSeconds(2);
 
         //--------------------------------------------------------------------
         //Properties
@@ -96,6 +97,37 @@ namespace Cardgame
             }//for
         }
 
+        //-----------------------------------------------------------------------------
+        //Hides the specified player's cards
+        private void HidePlayersCards(bool Side)
+        {
+            sbyte[] player1Indexes = player1Hand.GetIndexes();
+            sbyte[] player2Indexes = player2Hand.GetIndexes();
+            for (int i = 0; i < player1Hand.Size; i++)
+            {
+                Player1Grid.Children[player1Indexes[i]].Visibility = !Side ? Visibility.Hidden : Visibility.Visible;
+            }
+            for (int i = 0; i < player2Hand.Size; i++)
+            {
+                Player2Grid.Children[player2Indexes[i]].Visibility = !Side ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        //---------------------------------------------------------------------------
+        //Hotswap (hides both player's card for the specified time)
+        private async Task HotSwap()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Player1Grid.Children[i].Visibility = Visibility.Hidden;
+                Player2Grid.Children[i].Visibility = Visibility.Hidden;
+            }
+
+            //The time to wait till the cards are shown again
+            await Task.Delay(HotSwapTime);
+            HidePlayersCards(!CurrentSide);
+        }
+
         //********************************************************************************
         //Public Methods
         //Starts a new game resets everything
@@ -106,7 +138,8 @@ namespace Cardgame
             player1Score = player1Hand.Size;//Updates the red player's score to default
             player2Score = player2Hand.Size;//Updates the blue player's score to default
             UpdatePlayerGrids();
-            board = new Field(FieldGrid);
+            board = new Field(FieldGrid, player1Hand.Size);
+            HidePlayersCards(true);
         }
 
         //--------------------------------------------------------------------------------------
@@ -121,15 +154,18 @@ namespace Cardgame
             {
                 board.PutDownCard(index, player1Hand.GetCardByIndex(CurrentSelectedCardIndex));
                 (Player1Grid.Children[CurrentSelectedCardIndex] as Border).Visibility = Visibility.Hidden;
+                player1Hand.RemoveCard(player1Hand.GetCardByIndex(CurrentSelectedCardIndex));
             }//if
             else
             {
                 board.PutDownCard(index, player2Hand.GetCardByIndex(CurrentSelectedCardIndex));
                 (Player2Grid.Children[CurrentSelectedCardIndex] as Border).Visibility = Visibility.Hidden;
+                player2Hand.RemoveCard(player2Hand.GetCardByIndex(CurrentSelectedCardIndex));
             }//else
             CurrentSelectedCardIndex = -1;
             //Change the current player
             CurrentSide = !CurrentSide;
+            HotSwap();
         }
 
         //***********************************************************************************

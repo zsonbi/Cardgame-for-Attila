@@ -8,27 +8,23 @@ namespace Cardgame
 {
     internal class Field
     {
-        private sbyte numberOfPlacedCards = 0;
-
-        //The cards which are placed down
-        private Card[] cards = new Card[9];
-
+        private sbyte numberOfPlacedCards = 0;//The number of cards played
+        private Card[] cards = new Card[9];//The cards which are placed down
         private bool[] occupied = new bool[9];
         private Border[] CardObjects = new Border[9];
-
         private Grid FieldGrid;
 
         //Properties
-        public sbyte RedScore { get; private set; }
+        public sbyte RedScore { get; private set; } // Score of RedPlayer
 
-        public sbyte BlueScore { get; private set; }
+        public sbyte BlueScore { get; private set; } // Score of BluePlayer
 
         //Constructor
-        public Field(Grid FieldGrid)
+        public Field(Grid FieldGrid, sbyte handsize)
         {
             this.FieldGrid = FieldGrid;
-            RedScore = 0;
-            BlueScore = 0;
+            RedScore = handsize;
+            BlueScore = handsize;
         }
 
         //**********************************************************************
@@ -40,7 +36,7 @@ namespace Cardgame
             if (numberOfPlacedCards == 0)
             {
                 return;
-            }
+            }//if
 
             //Left check
             if (index - 1 >= 0 && occupied[index - 1] && index % 3 != 0)
@@ -48,38 +44,50 @@ namespace Cardgame
                 if (cards[index].LeftAttack > cards[index - 1].RightAttack)
                 {
                     ChangeSide((sbyte)(index - 1), cards[index].Side);
-                }
-            }
-
+                }//if
+            }//if
+            //Up check
             if (index - 3 >= 0 && occupied[index - 3])
             {
                 if (cards[index].UpAttack > cards[index - 1].DownAttack)
                 {
                     ChangeSide((sbyte)(index - 3), cards[index].Side);
-                }
-            }
-
+                }//if
+            }//if
+            //Right check
             if (index + 1 < 9 && occupied[index + 1] && index % 3 != 2)
             {
                 if (cards[index].RightAttack > cards[index + 1].LeftAttack)
                 {
                     ChangeSide((sbyte)(index + 1), cards[index].Side);
-                }
-            }
-
+                }//if
+            }//if
+            //Down check
             if (index + 3 < 9 && occupied[index + 3])
             {
                 if (cards[index].DownAttack > cards[index + 3].UpAttack)
                 {
                     ChangeSide((sbyte)(index + 3), cards[index].Side);
-                }
-            }
+                }//if
+            }//if
         }
 
+        //-----------------------------------------------------------------------
+        //Change the card's owner
         private void ChangeSide(sbyte index, bool Side)
         {
             cards[index].Side = Side;
             CardObjects[index].Background = !Side ? Brushes.Red : Brushes.Blue;
+            if (!Side)
+            {
+                RedScore++;
+                BlueScore--;
+            }//if
+            else
+            {
+                BlueScore++;
+                RedScore--;
+            }//else
         }
 
         //-----------------------------------------------------------------------

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cardgame
 {
@@ -41,9 +39,9 @@ namespace Cardgame
         //**********************************************************************************
         //Public Methods
         //Remove a card from the hand
-        public void RemoveCard(byte index)
+        public void RemoveCard(Card Element)
         {
-            cards.RemoveAt(index);
+            cards.Remove(Element);
         }
 
         //--------------------------------------------------------------------------------
@@ -58,6 +56,18 @@ namespace Cardgame
         public Card GetCardByIndex(sbyte index)
         {
             return cards.Find(x => x.index == index);
+        }
+
+        //--------------------------------------------------------------------------
+        //Get the cards indexes on the board
+        public sbyte[] GetIndexes()
+        {
+            sbyte[] output = new sbyte[Size];
+            for (int i = 0; i < Size; i++)
+            {
+                output[i] = cards[i].index;
+            }
+            return output;
         }
     }
 }
