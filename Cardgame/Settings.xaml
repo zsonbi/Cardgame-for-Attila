@@ -5,63 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cardgame"
         mc:Ignorable="d"
-        Title="Settings" Height="400" Width="400">
-    <Grid>
+        Title="Settings" Height="200" Width="300" ResizeMode="CanMinimize" Closing="Window_Closing">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Gray" />
+            <Setter Property="Margin" Value="0,5" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Gray" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="Gray">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.11*" />
-            <RowDefinition Height="0.11*" />
-            <RowDefinition Height="0.18*" />
-            <RowDefinition Height="0.09*" />
-            <RowDefinition Height="0.11*" />
-            <RowDefinition Height="0.11*" />
-            <RowDefinition Height="0.16*" />
-            <RowDefinition Height="0.7*" />
-            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="20px" />
+            <RowDefinition Height="29px" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="20px" />
+            <RowDefinition Height="20px" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!--X tengely-->
-        <Label Content="X tengelyen a szélessége:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" />
-        <TextBox x:Name="xtengelytbox" Grid.Column="1" Grid.Row="0" PreviewTextInput="OnlyNumber" LostFocus="tengelyek_LostFocus" Text="3" />
-
-        <!--Y tengely-->
-        <Label Content="Y tengelyen a szélessége:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" />
-        <TextBox x:Name="ytengelytbox" Grid.Column="1" Grid.Row="1"  PreviewTextInput="OnlyNumber" LostFocus="tengelyek_LostFocus" Text="3" />
-
-        <!--Checksize-->
-        <Label  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
-            <TextBlock HorizontalAlignment="Right">
-             Mennyinek kell<LineBreak />
-                kigyülnie a győzelelemhez:
-            </TextBlock>
-        </Label>
-        <TextBox x:Name="checksizetbox" Grid.Column="1" Grid.Row="2"  PreviewTextInput="OnlyNumber" LostFocus="checksizetbox_LostFocus" Text="3" />
-
-        <!--AI legyen-e-->
-        <CheckBox Grid.Row="3" Grid.ColumnSpan="2" Content="Hot" Name="AIcheck" />
-
-        <!--AI melyik oldalt játszon-->
-        <WrapPanel Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center">
-            <Label Content="Az AI melyik oldalt játszon?" />
-            <RadioButton Content="X legyen" GroupName="side" VerticalAlignment="Center" Name="Xradiobutton"></RadioButton>
-            <RadioButton Content="O legyen" GroupName="side" VerticalAlignment="Center" Name="Oradiobutton"></RadioButton>
-            <RadioButton Content="Random" GroupName="side" VerticalAlignment="Center" IsChecked="True" Name="randomradiobutton"></RadioButton>
-        </WrapPanel>
-
-        <!--Csak az AI játszon-e-->
-        <CheckBox Grid.Row="5" Grid.ColumnSpan="2" Content="Legyen-e 2 db AI ami egymás ellen játszon" Name="OnlyAIPlaysCheckBox" VerticalAlignment="Center" />
-
-        <!--Melyik fajta AI legyen használva-->
-        <StackPanel Grid.Row="6" Grid.ColumnSpan="2">
-            <RadioButton GroupName="AIType" Content="Minta alapján működő AI" IsChecked="True" Name="PatternAIRadiobtn"></RadioButton>
-            <RadioButton GroupName="AIType" Content="MiniMax Algoritmus alapján működő AI (Csak a 3x3-asnál támogatott)" Name="MiniMaxAIRadiobtn" Checked="MiniMaxAIRadiobtn_Checked"></RadioButton>
+        <!--GameTypes-->
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
+            <!--Hot Seat-->
+            <RadioButton  Content="Hot Seat" GroupName="gamytypes" IsChecked="False" Name="HotSeatRadio" VerticalAlignment="Center" />
+            <!--Ai-->
+            <RadioButton  Content="AI" GroupName="gamytypes" IsChecked="False" Name="AIRadio" VerticalAlignment="Center" />
+            <!--Both hands are shown-->
+            <RadioButton  Content="Show Both Hands" GroupName="gamytypes" IsChecked="false" Name="ShowBothHandsRadio" VerticalAlignment="Center" />
         </StackPanel>
 
-        <!--Done gomb-->
-        <Button Grid.Row="8" Grid.ColumnSpan="2" Content="Done" Name="Donebtn"></Button>
+        <!--Time Between the Side changes-->
+        <Label Content="Time between the side changes:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" />
+        <TextBox x:Name="Timetbox" Grid.Column="1" Grid.Row="1" PreviewTextInput="OnlyNumber" VerticalContentAlignment="Center" />
+
+        <!--New Game-->
+        <Button Grid.ColumnSpan="2" Grid.Row="3" Content="New Game" Name="NewGamebtn"></Button>
+
+        <!--Save-->
+        <Button Grid.Row="8" Grid.ColumnSpan="2" Content="Save" Name="Savebtn" Click="Savebtn_Click"></Button>
     </Grid>
 </Window>

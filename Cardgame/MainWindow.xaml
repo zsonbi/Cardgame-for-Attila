@@ -5,16 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cardgame"
         mc:Ignorable="d"
-        Title="Game" Height="800" Width="1300">
+        Title="Game" Height="800" Width="1300" Closing="Window_Closing">
 
     <Window.Resources>
         <Style TargetType="Rectangle">
             <EventSetter Event="MouseLeftButtonDown" Handler="Rectangle_MouseLeftButtonDown" />
             <Setter Property="Grid.ZIndex" Value="10"></Setter>
+            <Setter Property="Margin" Value="1" />
+            <Setter Property="Fill" Value="Black" />
         </Style>
     </Window.Resources>
     <!--MainGrid-->
-    <Grid>
+    <Grid Background="Gray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.7*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -65,15 +67,15 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Rectangle Fill="Gray" Name="Rect0" Grid.Row="0" Grid.Column="0"></Rectangle>
-            <Rectangle Fill="Gray" Name="Rect1" Grid.Row="0" Grid.Column="1"></Rectangle>
-            <Rectangle Fill="Gray" Name="Rect2" Grid.Row="0" Grid.Column="2"></Rectangle>
-            <Rectangle Fill="Gray" Name="Rect3" Grid.Row="1" Grid.Column="0"></Rectangle>
-            <Rectangle Fill="Gray" Name="Rect4" Grid.Row="1" Grid.Column="1"></Rectangle>
-            <Rectangle Fill="Gray" Name="Rect5" Grid.Row="1" Grid.Column="2"></Rectangle>
-            <Rectangle Fill="Gray" Name="Rect6" Grid.Row="2" Grid.Column="0"></Rectangle>
-            <Rectangle Fill="Gray" Name="Rect7" Grid.Row="2" Grid.Column="1"></Rectangle>
-            <Rectangle Fill="Gray" Name="Rect8" Grid.Row="2" Grid.Column="2"></Rectangle>
+            <Rectangle  Name="Rect0" Grid.Row="0" Grid.Column="0"></Rectangle>
+            <Rectangle Name="Rect1" Grid.Row="0" Grid.Column="1"></Rectangle>
+            <Rectangle  Name="Rect2" Grid.Row="0" Grid.Column="2"></Rectangle>
+            <Rectangle  Name="Rect3" Grid.Row="1" Grid.Column="0"></Rectangle>
+            <Rectangle  Name="Rect4" Grid.Row="1" Grid.Column="1"></Rectangle>
+            <Rectangle  Name="Rect5" Grid.Row="1" Grid.Column="2"></Rectangle>
+            <Rectangle  Name="Rect6" Grid.Row="2" Grid.Column="0"></Rectangle>
+            <Rectangle  Name="Rect7" Grid.Row="2" Grid.Column="1"></Rectangle>
+            <Rectangle  Name="Rect8" Grid.Row="2" Grid.Column="2"></Rectangle>
         </Grid>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" Height="30" VerticalAlignment="Top">

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -25,6 +24,7 @@ namespace Cardgame
             this.FieldGrid = FieldGrid;
             RedScore = handsize;
             BlueScore = handsize;
+            ResetGrid();
         }
 
         //**********************************************************************
@@ -108,6 +108,21 @@ namespace Cardgame
             CardObjects[index] = border;
             occupied[index] = true;
             FieldGrid.Children.Add(border);
+        }
+
+        //------------------------------------------------------------------------
+        //Resets the grid deletes the cards in it
+        private void ResetGrid()
+        {
+            for (int i = 0; i < FieldGrid.Children.Count; i++)
+            {
+                //If the element is a Border (card) remove it
+                if (FieldGrid.Children[i].GetType().Name == "Border")
+                {
+                    FieldGrid.Children.Remove(FieldGrid.Children[i] as Border);
+                    i--;
+                }//if
+            }//for
         }
 
         //**************************************************************************

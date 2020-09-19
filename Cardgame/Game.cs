@@ -24,7 +24,8 @@ namespace Cardgame
         private Field board; //The Board where the players will place their cards
         private bool CurrentSide = false; //The side which comes next
         private sbyte CurrentSelectedCardIndex = -1; //The current
-        private TimeSpan HotSwapTime = TimeSpan.FromSeconds(2);
+        private TimeSpan HotSeatTime;
+        private byte gameType;
 
         //--------------------------------------------------------------------
         //Properties
@@ -38,9 +39,12 @@ namespace Cardgame
         //Constructor
         public Game(Grid FieldGrid, Grid Player1Grid, Grid Player2Grid)
         {
+            Properties.Settings.Default.Upgrade();
             this.FieldGrid = FieldGrid;
             this.Player1Grid = Player1Grid;
             this.Player2Grid = Player2Grid;
+            HotSeatTime = TimeSpan.FromSeconds(Properties.Settings.Default.WaitTime);
+            gameType = Properties.Settings.Default.gameType;
             NewGame();
         }
 
@@ -124,7 +128,7 @@ namespace Cardgame
             }
 
             //The time to wait till the cards are shown again
-            await Task.Delay(HotSwapTime);
+            await Task.Delay(HotSeatTime);
             HidePlayersCards(!CurrentSide);
         }
 
