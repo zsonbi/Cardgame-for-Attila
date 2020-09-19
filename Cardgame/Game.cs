@@ -115,7 +115,7 @@ namespace Cardgame
 
         //---------------------------------------------------------------------------
         //Hotswap (hides both player's card for the specified time)
-        private async Task HotSwap()
+        private async Task HotSeat()
         {
             for (int i = 0; i < 5; i++)
             {
@@ -165,7 +165,7 @@ namespace Cardgame
             CurrentSelectedCardIndex = -1;
             //Change the current player
             CurrentSide = !CurrentSide;
-            HotSwap();
+            HotSeat();
         }
 
         //***********************************************************************************
