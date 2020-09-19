@@ -148,5 +148,9 @@
   <ItemGroup>
     <Resource Include="CardPictures\bat.png" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="ImageResources\SettingsIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

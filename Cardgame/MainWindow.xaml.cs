@@ -25,5 +25,9 @@ namespace Cardgame
         {
             game.PlaceCard(Convert.ToSByte((sender as Rectangle).Name.Split('t')[1]));
         }
+
+        private void Settings_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+        }
     }
 }
