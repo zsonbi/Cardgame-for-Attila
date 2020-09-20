@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,10 +19,11 @@ namespace Cardgame
         private Grid Player1Grid; //red player's hand
         private Grid Player2Grid; //blue player's hand
         private Field board; //The Board where the players will place their cards
-        private bool CurrentSide = false; //The side which comes next
-        private sbyte CurrentSelectedCardIndex = -1; //The current
+        private bool CurrentSide; //The side which comes next
+        private sbyte CurrentSelectedCardIndex = -1; //The current selected card
         private TimeSpan HotSeatTime;
         private byte gameType;
+        private Label[] scoreLabels = new Label[2];
 
         //--------------------------------------------------------------------
         //Properties
@@ -39,12 +37,10 @@ namespace Cardgame
         //Constructor
         public Game(Grid FieldGrid, Grid Player1Grid, Grid Player2Grid)
         {
-            Properties.Settings.Default.Upgrade();
+            Properties.Settings.Default.Reload();
             this.FieldGrid = FieldGrid;
             this.Player1Grid = Player1Grid;
             this.Player2Grid = Player2Grid;
-            HotSeatTime = TimeSpan.FromSeconds(Properties.Settings.Default.WaitTime);
-            gameType = Properties.Settings.Default.gameType;
             NewGame();
         }
 
@@ -55,6 +51,44 @@ namespace Cardgame
         {
             player1Deck = new Deck("..\\..\\Decks\\player1Deck.json");
             player2Deck = new Deck("..\\..\\Decks\\player2Deck.json");
+        }
+
+        //------------------------------------------------------------------
+        //Creates a StackPanel which contains two labels
+        private StackPanel CreateScoreLabels(bool Side)
+        {
+            StackPanel output = new StackPanel();
+            Grid.SetColumn(output, Player1Grid.ColumnDefinitions.Count - 1);
+            Grid.SetRow(output, Player1Grid.RowDefinitions.Count - 1);
+            output.Orientation = Orientation.Horizontal;
+            output.HorizontalAlignment = HorizontalAlignment.Right;
+            Label scorelabel = new Label();
+            scorelabel.Content = "Score";
+            scorelabel.Foreground = !Side ? Brushes.Red : Brushes.Blue;
+            scorelabel.FontSize = 25;
+            scorelabel.VerticalAlignment = VerticalAlignment.Bottom;
+            Label CounterLabel = new Label();
+            CounterLabel.Content = "";
+            CounterLabel.Foreground = !Side ? Brushes.Red : Brushes.Blue;
+            CounterLabel.FontSize = 25;
+            CounterLabel.VerticalAlignment = VerticalAlignment.Bottom;
+            CounterLabel.Name = (!Side ? "Red" : "Blue") + "Score";
+
+            output.Children.Add(scorelabel);
+            output.Children.Add(CounterLabel);
+            scoreLabels[!Side ? 0 : 1] = CounterLabel;
+
+            return output;
+        }
+
+        //---------------------------------------------------------------------------
+        //Updates the scores
+        private void UpdateScore()
+        {
+            player1Score = (sbyte)(player1Hand.Size + board.RedScore);
+            player2Score = (sbyte)(player2Hand.Size + board.BlueScore);
+            scoreLabels[0].Content = player1Score;
+            scoreLabels[1].Content = player2Score;
         }
 
         //--------------------------------------------------------------------------------
@@ -99,6 +133,8 @@ namespace Cardgame
             {
                 Player2Grid.Children.Add(CreateCard(i, player2Hand.GetUri(i), player2Hand.Side));
             }//for
+            Player1Grid.Children.Add(CreateScoreLabels(false));
+            Player2Grid.Children.Add(CreateScoreLabels(true));
         }
 
         //-----------------------------------------------------------------------------
@@ -137,6 +173,10 @@ namespace Cardgame
         //Starts a new game resets everything
         public void NewGame()
         {
+            gameType = Properties.Settings.Default.gameType;
+            CurrentSide = false;
+            HotSeatTime = TimeSpan.FromSeconds(Properties.Settings.Default.WaitTime);
+            gameType = Properties.Settings.Default.gameType;
             CreateDecks();//Creates the decks
             Createhands();//Creates the hands
             player1Score = player1Hand.Size;//Updates the red player's score to default
@@ -144,6 +184,7 @@ namespace Cardgame
             UpdatePlayerGrids();
             board = new Field(FieldGrid, player1Hand.Size);
             HidePlayersCards(true);
+            UpdateScore();
         }
 
         //--------------------------------------------------------------------------------------
@@ -169,6 +210,10 @@ namespace Cardgame
             CurrentSelectedCardIndex = -1;
             //Change the current player
             CurrentSide = !CurrentSide;
+
+            //UpdateScore
+            UpdateScore();
+
             HotSeat();
         }
 

@@ -39,6 +39,11 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Label  Content="Score:" FontSize="25" Foreground="Red" VerticalAlignment="Bottom"></Label>
+                <Label  Content="0" Name="RedScoreLabel" FontSize="25" Foreground="Red" VerticalAlignment="Bottom"></Label>
+            </StackPanel>
         </Grid>
 
         <!--Player2-->
@@ -52,6 +57,11 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Label  Content="Score:" FontSize="25" Foreground="Blue" VerticalAlignment="Bottom"></Label>
+                <Label  Content="0" Name="BlueScoreLabel" FontSize="25" Foreground="Blue" VerticalAlignment="Bottom"></Label>
+            </StackPanel>
         </Grid>
 
         <!--Playfield-->

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Cardgame
@@ -17,6 +19,14 @@ namespace Cardgame
         {
             InitializeComponent();
             game = new Game(Playfield, Player1Grid, Player2Grid);
+        }
+
+        //****************************************************************************
+        //Private Methods
+        //Starts a new game
+        private void NewGame()
+        {
+            game.NewGame(); //Starts a new game
         }
 
         //***********************************************************************************
@@ -48,7 +58,7 @@ namespace Cardgame
         private void NewGamebtn_Click(object sender, RoutedEventArgs e)
         {
             settingsWindow.Close();
-            game = new Game(Playfield, Player1Grid, Player2Grid);
+            NewGame();
         }
     }
 }

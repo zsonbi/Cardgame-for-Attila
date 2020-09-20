@@ -22,8 +22,8 @@ namespace Cardgame
         public Field(Grid FieldGrid, sbyte handsize)
         {
             this.FieldGrid = FieldGrid;
-            RedScore = handsize;
-            BlueScore = handsize;
+            RedScore = 0;
+            BlueScore = 0;
             ResetGrid();
         }
 
@@ -135,6 +135,10 @@ namespace Cardgame
             CheckNeighbours(index);
             PlaceCardInGrid(index, thePlacedCard.PictureUri, thePlacedCard.Side);
             numberOfPlacedCards++;
+            if (!thePlacedCard.Side)
+                RedScore++;
+            else
+                BlueScore++;
         }
     }
 }
