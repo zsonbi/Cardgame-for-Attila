@@ -9,7 +9,7 @@ namespace Cardgame
     {
         private sbyte numberOfPlacedCards = 0;//The number of cards played
         private Card[] cards = new Card[9];//The cards which are placed down
-        private bool[] occupied = new bool[9];
+        private bool[] occupied = new bool[9];//The value is false if the index is empty
         private Border[] CardObjects = new Border[9];
         private Grid FieldGrid;
 
@@ -139,6 +139,12 @@ namespace Cardgame
                 RedScore++;
             else
                 BlueScore++;
+        }
+
+        //Checks if the board is full
+        public bool IsOver()
+        {
+            return numberOfPlacedCards == 9;
         }
     }
 }

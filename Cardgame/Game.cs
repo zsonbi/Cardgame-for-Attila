@@ -53,6 +53,24 @@ namespace Cardgame
             player2Deck = new Deck("..\\..\\Decks\\player2Deck.json");
         }
 
+        //-------------------------------------------------------------------
+        //Determines who won
+        private string WhoWon()
+        {
+            if (player1Score > player2Score)
+            {
+                return "Red Wins";
+            }
+            else if (player1Score < player2Score)
+            {
+                return "Blue Wins";
+            }
+            else
+            {
+                return "Draw";
+            }
+        }
+
         //------------------------------------------------------------------
         //Creates a StackPanel which contains two labels
         private StackPanel CreateScoreLabels(bool Side)
@@ -213,6 +231,14 @@ namespace Cardgame
 
             //UpdateScore
             UpdateScore();
+
+            //When the board is full
+            if (board.IsOver())
+            {
+                //Select a winner
+                MessageBox.Show(WhoWon());
+                return;
+            }
 
             HotSeat();
         }
