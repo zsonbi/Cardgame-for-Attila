@@ -21,9 +21,9 @@ namespace Cardgame
         private Field board; //The Board where the players will place their cards
         private bool CurrentSide; //The side which comes next
         private sbyte CurrentSelectedCardIndex = -1; //The current selected card
-        private TimeSpan HotSeatTime;
-        private byte gameType;
-        private Label[] scoreLabels = new Label[2];
+        private TimeSpan HotSeatTime; //The time it waits during the hotswap
+        private byte gameType; //The type of game (0 hotseat, 1 AI, 2 Show Both hands ) 1 and 2 are unimplemented as of right now
+        private Label[] scoreLabels = new Label[2]; //The labels where the scores are
 
         //--------------------------------------------------------------------
         //Properties
@@ -191,7 +191,6 @@ namespace Cardgame
         //Starts a new game resets everything
         public void NewGame()
         {
-            gameType = Properties.Settings.Default.gameType;
             CurrentSide = false;
             HotSeatTime = TimeSpan.FromSeconds(Properties.Settings.Default.WaitTime);
             gameType = Properties.Settings.Default.gameType;
@@ -201,7 +200,8 @@ namespace Cardgame
             player2Score = player2Hand.Size;//Updates the blue player's score to default
             UpdatePlayerGrids();
             board = new Field(FieldGrid, player1Hand.Size);
-            HidePlayersCards(true);
+            if (gameType == 0 || gameType == 1)
+                HidePlayersCards(true);
             UpdateScore();
         }
 
@@ -240,7 +240,8 @@ namespace Cardgame
                 return;
             }
 
-            HotSeat();
+            if (gameType == 0)
+                HotSeat();
         }
 
         //***********************************************************************************

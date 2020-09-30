@@ -141,6 +141,7 @@ namespace Cardgame
                 BlueScore++;
         }
 
+        //--------------------------------------------------------------------------
         //Checks if the board is full
         public bool IsOver()
         {

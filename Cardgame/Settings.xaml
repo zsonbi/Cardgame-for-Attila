@@ -36,7 +36,7 @@
             <!--Hot Seat-->
             <RadioButton  Content="Hot Seat" GroupName="gamytypes" IsChecked="False" Name="HotSeatRadio" VerticalAlignment="Center" />
             <!--Ai-->
-            <RadioButton  Content="AI" GroupName="gamytypes" IsChecked="False" Name="AIRadio" VerticalAlignment="Center" />
+            <RadioButton  Content="AI Opponent" GroupName="gamytypes" IsChecked="False" Name="AIRadio" VerticalAlignment="Center" />
             <!--Both hands are shown-->
             <RadioButton  Content="Show Both Hands" GroupName="gamytypes" IsChecked="false" Name="ShowBothHandsRadio" VerticalAlignment="Center" />
         </StackPanel>

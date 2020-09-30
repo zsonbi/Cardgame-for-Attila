@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -48,15 +44,15 @@ namespace Cardgame
             if ((bool)HotSeatRadio.IsChecked)
             {
                 Properties.Settings.Default.gameType = 0;
-            }
+            }//if
             else if ((bool)AIRadio.IsChecked)
             {
                 Properties.Settings.Default.gameType = 1;
-            }
+            }//else if
             else
             {
                 Properties.Settings.Default.gameType = 2;
-            }
+            }//else
             Properties.Settings.Default.Save();
         }
 
