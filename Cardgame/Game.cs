@@ -24,6 +24,7 @@ namespace Cardgame
         private TimeSpan HotSeatTime; //The time it waits during the hotswap
         private byte gameType; //The type of game (0 hotseat, 1 AI, 2 Show Both hands ) 1 and 2 are unimplemented as of right now
         private Label[] scoreLabels = new Label[2]; //The labels where the scores are
+        private AI bot;
 
         //--------------------------------------------------------------------
         //Properties
@@ -203,6 +204,7 @@ namespace Cardgame
             if (gameType == 0 || gameType == 1)
                 HidePlayersCards(true);
             UpdateScore();
+            bot = new AI(board, player2Hand);
         }
 
         //--------------------------------------------------------------------------------------
@@ -227,7 +229,8 @@ namespace Cardgame
             }//else
             CurrentSelectedCardIndex = -1;
             //Change the current player
-            CurrentSide = !CurrentSide;
+            if (gameType != 1)
+                CurrentSide = !CurrentSide;
 
             //UpdateScore
             UpdateScore();
@@ -238,6 +241,15 @@ namespace Cardgame
                 //Select a winner
                 MessageBox.Show(WhoWon());
                 return;
+            }
+
+            if (gameType == 1)
+            {
+                sbyte[] temp = bot.Next();
+
+                board.PutDownCard(temp[0], player2Hand.GetCardByIndex(temp[1]));
+                (Player2Grid.Children[temp[1]] as Border).Visibility = Visibility.Hidden;
+                player2Hand.RemoveCard(player2Hand.GetCardByIndex(temp[1]));
             }
 
             if (gameType == 0)

@@ -49,7 +49,7 @@ namespace Cardgame
             //Up check
             if (index - 3 >= 0 && occupied[index - 3])
             {
-                if (cards[index].UpAttack > cards[index - 1].DownAttack)
+                if (cards[index].UpAttack > cards[index - 3].DownAttack)
                 {
                     ChangeSide((sbyte)(index - 3), cards[index].Side);
                 }//if
@@ -146,6 +146,68 @@ namespace Cardgame
         public bool IsOver()
         {
             return numberOfPlacedCards == 9;
+        }
+
+        //Returns if the indexed place is occupied or not
+        public bool IsOccupied(sbyte index)
+        {
+            return occupied[index];
+        }
+
+        public sbyte CanTakeOver(sbyte index, Card input)
+        {
+            sbyte output = 0;
+            //So the computer doesn't do useless stuff
+            if (numberOfPlacedCards == 0)
+            {
+                return 0;
+            }//if
+
+            //Left check
+            if (index - 1 >= 0 && occupied[index - 1] && index % 3 != 0)
+            {
+                if (input.LeftAttack > cards[index - 1].RightAttack)
+                {
+                    if (cards[index - 1].Side != input.Side)
+                    {
+                        output++;
+                    }
+                }//if
+            }//if
+            //Up check
+            if (index - 3 >= 0 && occupied[index - 3])
+            {
+                if (input.UpAttack > cards[index - 3].DownAttack)
+                {
+                    if (cards[index - 3].Side != input.Side)
+                    {
+                        output++;
+                    }
+                }//if
+            }//if
+            //Right check
+            if (index + 1 < 9 && occupied[index + 1] && index % 3 != 2)
+            {
+                if (input.RightAttack > cards[index + 1].LeftAttack)
+                {
+                    if (cards[index + 1].Side != input.Side)
+                    {
+                        output++;
+                    }
+                }//if
+            }//if
+            //Down check
+            if (index + 3 < 9 && occupied[index + 3])
+            {
+                if (input.DownAttack > cards[index + 3].UpAttack)
+                {
+                    if (cards[index + 3].Side != input.Side)
+                    {
+                        output++;
+                    }
+                }//if
+            }//if
+            return output;
         }
     }
 }
